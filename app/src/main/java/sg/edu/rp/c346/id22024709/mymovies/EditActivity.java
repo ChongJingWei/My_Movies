@@ -114,7 +114,7 @@ public class EditActivity extends AppCompatActivity {
 
                 AlertDialog.Builder myBuilder = new AlertDialog.Builder(EditActivity.this);
                 myBuilder.setTitle("Danger");
-                myBuilder.setMessage("Are you sure you wish to delete movie" + data.getTitle() + "?");
+                myBuilder.setMessage("Are you sure you wish to delete movie " + data.getTitle() + " ?");
                 myBuilder.setCancelable(true);
 
                 myBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
