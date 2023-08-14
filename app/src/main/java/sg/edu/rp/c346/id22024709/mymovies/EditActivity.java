@@ -1,6 +1,8 @@
 package sg.edu.rp.c346.id22024709.mymovies;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -109,15 +111,72 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DBHelper db = new DBHelper(EditActivity.this);
-                db.deleteMovie(data.get_id());
-                setResult(Activity.RESULT_OK);
-                finish();
+
+                AlertDialog.Builder myBuilder = new AlertDialog.Builder(EditActivity.this);
+                myBuilder.setTitle("Danger");
+                myBuilder.setMessage("Are you sure you wish to delete movie" + data.getTitle() + "?");
+                myBuilder.setCancelable(true);
+
+                myBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.deleteMovie(data.get_id());
+                        setResult(Activity.RESULT_OK);
+                        finish();
+                    }
+                });
+                myBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+
+                AlertDialog myDialog = myBuilder.create();
+                myDialog.show();
+
+
+
             }
         });
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if      (!(data.getTitle().equals(teTitle2.getText().toString())) ||
+                        !(data.getGenre().equals(teGenre2.getText().toString())) ||
+                        (data.getYear() != Integer.parseInt(teYear2.getText().toString())) ||
+                        !(data.getRating().equals(rating))) {
+
+                    AlertDialog.Builder myBuilder = new AlertDialog.Builder(EditActivity.this);
+                    myBuilder.setTitle("Danger");
+                    myBuilder.setMessage("Unsaved changes detected. Are you sure you wish to return to list page and discard changes?");
+                    myBuilder.setCancelable(true);
+
+                    myBuilder.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    myBuilder.setNegativeButton("DO NOT DISCARD", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+
+                    AlertDialog myDialog = myBuilder.create();
+                    myDialog.show();
+
+
+                } else {
+                    finish();
+                }
+
+
+
             }
         });
     }

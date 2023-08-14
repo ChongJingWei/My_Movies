@@ -13,6 +13,7 @@
     <string name="update">UPDATE</string>
     <string name="delete">DELETE</string>
     <string name="return2">RETURN TO LIST</string>
+    <string name="returnAdd">Add new movie</string>
 
     <string-array name="spinnerItems">
      <item>G</item>

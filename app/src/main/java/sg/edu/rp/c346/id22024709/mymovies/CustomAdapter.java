@@ -24,6 +24,13 @@ public class CustomAdapter extends ArrayAdapter {
         parent_context = context;
         layout_id = resource;
         movieList = objects;
+
+    }
+
+    public void updateData(ArrayList<Movie> newData) {
+        movieList.clear();
+        movieList.addAll(newData);
+        notifyDataSetChanged();
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent){

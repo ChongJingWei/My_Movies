@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Showlist extends AppCompatActivity {
     private static final int EDIT_REQUEST_CODE = 1;
     ListView movieList;
-    Button btnShowRate;
+    Button btnShowRate, btnAddReturn;
     Spinner rateSpin;
     CustomAdapter customAdapter;
     ArrayList<Movie> movieal;
@@ -33,6 +33,7 @@ public class Showlist extends AppCompatActivity {
         movieList = findViewById(R.id.movieLv);
         btnShowRate = findViewById(R.id.btnShowRate);
         rateSpin = findViewById(R.id.rateSpinShow);
+        btnAddReturn = findViewById(R.id.btnAddReturn);
 
         DBHelper db = new DBHelper(Showlist.this);
         movieal = db.getMovie();
@@ -41,6 +42,17 @@ public class Showlist extends AppCompatActivity {
         movieList.setAdapter(customAdapter);
         customAdapter.notifyDataSetChanged();
         rating = "All";
+
+        btnAddReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addReturn = new Intent(Showlist.this,MainActivity.class);
+                startActivity(addReturn);
+            }
+        });
+
+
+
         rateSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -135,7 +147,7 @@ public class Showlist extends AppCompatActivity {
             DBHelper db = new DBHelper(Showlist.this);
             movieal.clear();
             movieal.addAll(db.getMovie());
-            customAdapter.notifyDataSetChanged();
+            customAdapter.updateData(db.getMovie());
             db.close();
         }
     }
